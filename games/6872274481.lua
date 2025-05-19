@@ -9471,4 +9471,3 @@ run(function()
 		List = WinEffectName
 	})
 end)
-	
