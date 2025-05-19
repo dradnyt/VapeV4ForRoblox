@@ -2545,7 +2545,7 @@ end
 
 MakeSnake(SNAKE_LENGTH, SNAKE_SIZE, SNAKE_WOBBLINESS)
         end,
-        Default = 'false,
+        Default = false,
         Tooltip = "Jiggly Penis"
     })
 end)
