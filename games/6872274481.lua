@@ -2425,8 +2425,8 @@ run(function()
 end)
 
 run(function()
-    Jiggly Penis= vape.Categories.Utility:CreateModule({
-        Name = 'Jiggly Penis',
+    JigglyPenis= vape.Categories.Utility:CreateModule({
+        Name = "JigglyPenis",
         Function = function(callback)
             if callback then
                 		
