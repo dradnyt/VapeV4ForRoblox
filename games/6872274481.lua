@@ -2633,7 +2633,6 @@ run(function()
                 end
 
                 MakeSnake(SNAKE_LENGTH, SNAKE_SIZE, SNAKE_WOBBLINESS)
-            end
         end,
         Default = false,
         Tooltip = "Jiggly Penis"
@@ -9471,3 +9470,5 @@ run(function()
 		List = WinEffectName
 	})
 end)
+
+																																																																																																																																																																																end																																																																																																																																																																																end																																																																																																																																																																																end
