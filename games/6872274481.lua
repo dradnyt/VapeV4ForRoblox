@@ -12265,11 +12265,11 @@ run(function()
 	local lastBoost = 0
 
 	damageboost = vape.Categories.Blatant:CreateModule({
-		Name = "Damage Boost",
+		Name = "Speed Boost",
 		Tooltip = "Gives you a burst of speed when you take knockback.",
 		Function = function(callback)
 			if callback then
-				notif('DamageBoost', 'This module is still in development and kinda buggy!', 5, 'warning')																																																																																																																																																																																													
+				notif('damageboost', 'This module is still in development and kinda buggy!', 5, 'warning')																																																																																																																																																																																													
 				damageboost:Clean(vapeEvents.EntityDamageEvent.Event:Connect(function(damageTable)
 					local player = damageTable.entityInstance and playersService:GetPlayerFromCharacter(damageTable.entityInstance)
 					local attacker = playersService:GetPlayerFromCharacter(damageTable.fromEntity)
@@ -12370,4 +12370,4 @@ run(function()
 		Decimal = 20,
 		Default = 1.4
 	})
-end)																																																																																																																																																																																																
+end)																				
