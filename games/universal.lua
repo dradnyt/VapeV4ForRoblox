@@ -7284,7 +7284,7 @@ run(function()
 				end
 			end
 	
-			clone.Humanoid:ApplyDescriptionClientServer(desc)
+			clone.game.ReplicatedStorage.ApplyDescriptionClientServer:FireServer(desc)
 			for _, v in char.Character:GetChildren() do
 				itemAdded(v)
 			end
