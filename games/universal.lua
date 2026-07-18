@@ -7230,6 +7230,7 @@ run(function()
 end)
 	
 rrun(function()
+	local playersService = game:GetService("Players")
     local Disguise
     local Mode
     local IDBox
@@ -7253,8 +7254,8 @@ rrun(function()
             local clone = char.Character:Clone()
             repeat
                 if pcall(function()
-                    desc = playersService:GetHumanoidDescriptionFromUserId(IDBox.Value == '' and 239702688 or tonumber(IDBox.Value))
-                end) and desc then break end
+                     desc = game:GetService("Players"):GetHumanoidDescriptionFromUserId(IDBox.Value == '' and 239702688 or tonumber(IDBox.Value))
+                end) and desc then break enddesc
                 task.wait(1)
             until not Disguise.Enabled
             if not Disguise.Enabled then
