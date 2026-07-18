@@ -18,7 +18,7 @@ end
 
 local queue_on_teleport = queue_on_teleport or function() end
 
--- FIXED: Re-structured isfile to prevent it from evaluating to nil or breaking the compiler
+-- Globally fixed environment replacements
 local isfile = function(file)
 	local suc, res = pcall(function()
 		return readfile and readfile(file)
@@ -30,6 +30,14 @@ local cloneref = function(obj)
 	return obj
 end
 local playersService = game:GetService('Players')
+
+-- Helper to force scripts to inherit this clean environment
+local function runInCurrentEnv(func, ...)
+	if type(func) == "function" then
+		setfenv(func, getfenv(0))
+		return func(...)
+	end
+end
 
 local function downloadFile(path, func)
 	if not isfile(path) then
@@ -98,20 +106,20 @@ local gui = readfile('newvape/profiles/gui.txt')
 if not isfolder('newvape/assets/'..gui) then
 	makefolder('newvape/assets/'..gui)
 end
-vape = loadstring(downloadFile('newvape/guis/'..gui..'.lua'), 'gui')()
+vape = runInCurrentEnv(loadstring(downloadFile('newvape/guis/'..gui..'.lua'), 'gui'))
 shared.vape = vape
 
 if not shared.VapeIndependent then
-	loadstring(downloadFile('newvape/games/universal.lua'), 'universal')()
+	runInCurrentEnv(loadstring(downloadFile('newvape/games/universal.lua'), 'universal'))
 	if isfile('newvape/games/'..game.PlaceId..'.lua') then
-		loadstring(readfile('newvape/games/'..game.PlaceId..'.lua'), tostring(game.PlaceId))(...)
+		runInCurrentEnv(loadstring(readfile('newvape/games/'..game.PlaceId..'.lua'), tostring(game.PlaceId)), ...)
 	else
 		if not shared.VapeDeveloper then
 			local suc, res = pcall(function()
 				return game:HttpGet('https://raw.githubusercontent.com/dradnyt/VapeV4ForRoblox/main/games/'..game.PlaceId..'.lua', true)
 			end)
 			if suc and res ~= '404: Not Found' then
-				loadstring(downloadFile('newvape/games/'..game.PlaceId..'.lua'), tostring(game.PlaceId))(...)
+				runInCurrentEnv(loadstring(downloadFile('newvape/games/'..game.PlaceId..'.lua'), tostring(game.PlaceId)), ...)
 			end
 		end
 	end
