@@ -101,25 +101,27 @@ if not isfile('newvape/profiles/gui.txt') then
 	makefolder('newvape/profiles')
 	writefile('newvape/profiles/gui.txt', 'new')
 end
-local gui = readfile('newvape/profiles/gui.txt')
-
-if not isfolder('newvape/assets/'..gui) then
-	makefolder('newvape/assets/'..gui)
-end
-vape = runInCurrentEnv(loadstring(downloadFile('newvape/guis/'..gui..'.lua'), 'gui'))
+-- Execute GUI and capture the returned table
+local guiFunction = loadstring(downloadFile('newvape/guis/'..gui..'.lua'), 'gui')
+vape = runInCurrentEnv(guiFunction)
 shared.vape = vape
 
 if not shared.VapeIndependent then
-	runInCurrentEnv(loadstring(downloadFile('newvape/games/universal.lua'), 'universal'))
+	-- Execute Universal within the same environment
+	local universalFunction = loadstring(downloadFile('newvape/games/universal.lua'), 'universal')
+	runInCurrentEnv(universalFunction)
+	
 	if isfile('newvape/games/'..game.PlaceId..'.lua') then
-		runInCurrentEnv(loadstring(readfile('newvape/games/'..game.PlaceId..'.lua'), tostring(game.PlaceId)), ...)
+		local placeFunction = loadstring(readfile('newvape/games/'..game.PlaceId..'.lua'), tostring(game.PlaceId))
+		runInCurrentEnv(placeFunction, ...)
 	else
 		if not shared.VapeDeveloper then
 			local suc, res = pcall(function()
 				return game:HttpGet('https://raw.githubusercontent.com/dradnyt/VapeV4ForRoblox/main/games/'..game.PlaceId..'.lua', true)
 			end)
 			if suc and res ~= '404: Not Found' then
-				runInCurrentEnv(loadstring(downloadFile('newvape/games/'..game.PlaceId..'.lua'), tostring(game.PlaceId)), ...)
+				local downloadFunction = loadstring(downloadFile('newvape/games/'..game.PlaceId..'.lua'), tostring(game.PlaceId))
+				runInCurrentEnv(downloadFunction, ...)
 			end
 		end
 	end
