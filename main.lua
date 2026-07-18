@@ -17,14 +17,15 @@ local loadstring = function(...)
 end
 
 local queue_on_teleport = queue_on_teleport or function() end
-local isfile = isfile or function(file)
+
+-- FIXED: Re-structured isfile to prevent it from evaluating to nil or breaking the compiler
+local isfile = function(file)
 	local suc, res = pcall(function()
-		return readfile(file)
+		return readfile and readfile(file)
 	end)
-	return suc and res ~= nil and res ~= ''
+	return (suc and res ~= nil and res ~= '') and true or false
 end
 
--- FIXED: Forced cloneref to safely return the service object directly, bypassing executor bugs
 local cloneref = function(obj)
 	return obj
 end
@@ -88,6 +89,8 @@ local function finishLoading()
 end
 
 if not isfile('newvape/profiles/gui.txt') then
+	makefolder('newvape')
+	makefolder('newvape/profiles')
 	writefile('newvape/profiles/gui.txt', 'new')
 end
 local gui = readfile('newvape/profiles/gui.txt')
