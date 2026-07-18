@@ -7253,9 +7253,12 @@ rrun(function()
             char.Character.Archivable = true
             local clone = char.Character:Clone()
             repeat
-                if pcall(function()
-                     desc = game:GetService("Players"):GetHumanoidDescriptionFromUserId(IDBox.Value == '' and 239702688 or tonumber(IDBox.Value))
-                end) and desc then break end
+                local success = pcall(function()
+                    desc = game:GetService("Players"):GetHumanoidDescriptionFromUserId(IDBox.Value == '' and 239702688 or tonumber(IDBox.Value))
+                end)
+                if success and desc then 
+                    break 
+                end
                 task.wait(1)
             until not Disguise.Enabled
             if not Disguise.Enabled then
