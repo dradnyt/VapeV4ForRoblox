@@ -7255,7 +7255,7 @@ rrun(function()
             repeat
                 if pcall(function()
                      desc = game:GetService("Players"):GetHumanoidDescriptionFromUserId(IDBox.Value == '' and 239702688 or tonumber(IDBox.Value))
-                end) and desc then break enddesc
+                end) and desc then break end
                 task.wait(1)
             until not Disguise.Enabled
             if not Disguise.Enabled then
